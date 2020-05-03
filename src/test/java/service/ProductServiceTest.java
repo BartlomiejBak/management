@@ -33,6 +33,9 @@ public class ProductServiceTest {
         productService = new ProductServiceImpl(products);
 
         Assert.assertEquals(productService.getAllProducts(), products);
+        products.add(new Boots(55,"adida", 155, 11,
+                "yellow", 0, 41, false));
+        //Assert.assertNotEquals(productService.getAllProducts(), products);
     }
 
     @Test

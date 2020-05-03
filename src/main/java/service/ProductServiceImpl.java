@@ -19,31 +19,63 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return products;
     }
 
     @Override
     public int getNumberOfProducts() {
-        return 0;
+        int numberOfProducts = 0;
+        for (Product product : products) {
+            numberOfProducts += product.getProductCount();
+        }
+        return numberOfProducts;
     }
 
     @Override
     public Product getProductById(int id) {
-        return null;
+        Product product = null;
+        for (Product product1 : products) {
+            if (product1.getId() == id) {
+                product = product1;
+                break;
+            }
+        }
+        return product;
     }
 
     @Override
     public boolean isMoreThanZero(String productName) {
-        return false;
+        boolean result = false;
+        for (Product product : products) {
+            if (product.getProductName().equals(productName)) {
+                result = product.getProductCount() > 0;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean isNameOnList(String productName) {
-        return false;
+        boolean result = false;
+        for (Product product : products) {
+            if (product.getProductName().equals(productName)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean isIdOnList(int id) {
-        return false;
+        boolean result = false;
+        for (Product product : products) {
+            if (product.getId() == id) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }
