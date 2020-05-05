@@ -1,6 +1,8 @@
 package entity;
 
 public class Product {
+    public static final String DELIMITER = "#";
+
     private final int id;
     private final String productName;
     private double price;
@@ -53,13 +55,11 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", productName='" + productName + '\'' +
-                ", price=" + price +
-                ", weight=" + weight +
-                ", color='" + color + '\'' +
-                ", productCount=" + productCount +
-                '}';
+        return id + DELIMITER
+                + productName + DELIMITER
+                + price + DELIMITER
+                + weight + DELIMITER
+                + color + DELIMITER
+                + productCount;
     }
 }
