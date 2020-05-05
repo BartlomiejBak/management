@@ -1,6 +1,8 @@
 package entity;
 
 public class User {
+    public static final String DELIMITER = "#";
+
     private int id;
     private String login;
     private String password;
@@ -25,10 +27,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return id + DELIMITER +
+                login + DELIMITER +
+                password + DELIMITER;
     }
 }

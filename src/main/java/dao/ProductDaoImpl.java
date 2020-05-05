@@ -74,7 +74,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     private static Product convertToProduct(String productStr) {
-        String [] productInformation = productStr.split(Product.DELIMITER);
+        String[] productInformation = productStr.split(Product.DELIMITER);
 
         int id = Integer.parseInt(productInformation[0]);
         String productName = productInformation[1];
