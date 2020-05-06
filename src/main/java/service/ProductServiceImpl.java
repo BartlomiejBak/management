@@ -44,7 +44,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean isMoreThanZero(String productName) {
+    public Product getProductByName(String name) {
+        Product product = null;
+        for (Product product1 : products) {
+            if (product1.getProductName().equals(name)) {
+                product = product1;
+                break;
+            }
+        }
+        return product;
+    }
+
+    @Override
+    public boolean isProductOnStock(String productName) {
         boolean result = false;
         for (Product product : products) {
             if (product.getProductName().equals(productName)) {

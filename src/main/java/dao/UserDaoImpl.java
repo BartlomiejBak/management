@@ -2,6 +2,8 @@ package dao;
 
 import api.UserDao;
 import entity.User;
+import entity.parser.UserParser;
+import utils.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,14 +11,10 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     String fileName;
-    File file;
 
-    public UserDaoImpl(String fileName) {
+    public UserDaoImpl(String fileName) throws IOException {
         this.fileName = fileName;
-        this.file = new File(fileName);
-    }
-
-    public UserDaoImpl() {
+        FileUtils.createNewFile(fileName);
     }
 
     @Override
@@ -28,9 +26,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUsers(List<User> users) throws FileNotFoundException {
-        PrintWriter printWriter = new PrintWriter(file);
+        FileUtils.clearFile(fileName);
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
         for (User user : users) {
-            printWriter.println(user.toString());
+            printWriter.write(user.toString() + "\n");
         }
         printWriter.close();
     }
@@ -64,23 +63,15 @@ public class UserDaoImpl implements UserDao {
 
         String readLine = bufferedReader.readLine();
         while(readLine != null) {
-            User user = convertToUser(readLine);
-            users.add(user);
+            User user = UserParser.stringToUser(readLine);
+            if (user != null) {
+                users.add(user);
+            }
             readLine = bufferedReader.readLine();
         }
         bufferedReader.close();
 
         return users;
-    }
-
-    private static User convertToUser(String userStr) {
-        String[] userInformation = userStr.split(User.DELIMITER);
-
-        int id = Integer.parseInt(userInformation[0]);
-        String login = userInformation[1];
-        String password = userInformation[2];
-
-        return new User(id, login, password);
     }
 
     @Override

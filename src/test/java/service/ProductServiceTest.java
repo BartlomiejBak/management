@@ -62,12 +62,24 @@ public class ProductServiceTest {
     }
 
     @Test
+    public void testGetProductByName() {
+        initList();
+        productService = new ProductServiceImpl(products);
+
+        Product product = productService.getProductByName("kubota");
+        Product noProduct = productService.getProductByName("no name");
+
+        Assert.assertEquals(product, firstBoot);
+        Assert.assertNull(noProduct);
+    }
+
+    @Test
     public void testIsMoreThanZero() {
         initList();
         productService = new ProductServiceImpl(products);
 
-        boolean product = productService.isMoreThanZero("kubota");
-        boolean noProduct = productService.isMoreThanZero("adidas");
+        boolean product = productService.isProductOnStock("kubota");
+        boolean noProduct = productService.isProductOnStock("adidas");
 
         Assert.assertTrue(product);
         Assert.assertFalse(noProduct);

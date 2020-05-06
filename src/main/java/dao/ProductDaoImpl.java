@@ -2,21 +2,21 @@ package dao;
 
 import api.ProductDao;
 import entity.Product;
+import entity.parser.ProductParser;
+import utils.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoImpl implements ProductDao {
-    String fileName;
-    File file;
+    private final String fileName;
+    private final String productType;
 
-    public ProductDaoImpl(String fileName) {
+    public ProductDaoImpl(String fileName, String productType) throws IOException {
         this.fileName = fileName;
-        this.file = new File(fileName);
-    }
-
-    public ProductDaoImpl() {
+        this.productType = productType;
+        FileUtils.createNewFile(fileName);
     }
 
     @Override
@@ -28,9 +28,10 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void saveProducts(List<Product> products) throws FileNotFoundException {
-        PrintWriter printWriter = new PrintWriter(file);
+        FileUtils.clearFile(fileName);
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
         for (Product product : products) {
-            printWriter.println(product.toString());
+            printWriter.write(product.toString() + "\n");
         }
         printWriter.close();
     }
@@ -64,26 +65,15 @@ public class ProductDaoImpl implements ProductDao {
 
         String readLine = bufferedReader.readLine();
         while(readLine != null) {
-            Product product = convertToProduct(readLine);
-            products.add(product);
+            Product product = ProductParser.stringToProduct(readLine, productType);
+            if (product != null) {
+                products.add(product);
+            }
             readLine = bufferedReader.readLine();
         }
         bufferedReader.close();
 
         return products;
-    }
-
-    private static Product convertToProduct(String productStr) {
-        String[] productInformation = productStr.split(Product.DELIMITER);
-
-        int id = Integer.parseInt(productInformation[0]);
-        String productName = productInformation[1];
-        double price = Double.parseDouble(productInformation[2]);
-        double weight = Double.parseDouble(productInformation[3]);
-        String color = productInformation[4];
-        int productCount = Integer.parseInt(productInformation[5]);
-
-        return new Product(id, productName, price, weight, color, productCount);
     }
 
     @Override
