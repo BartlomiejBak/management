@@ -1,6 +1,7 @@
 package entity;
 
 public class Cloth extends Product {
+    public static String productType = "C";
     private final String size;
     private final String material;
     

@@ -10,13 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoImpl implements ProductDao {
-    private final String fileName;
-    private final String productType;
+    private static final String fileName = "products.data";
+    private static ProductDaoImpl instance = null;
 
-    public ProductDaoImpl(String fileName, String productType) throws IOException {
-        this.fileName = fileName;
-        this.productType = productType;
-        FileUtils.createNewFile(fileName);
+    private ProductDaoImpl() {
+        try {
+            FileUtils.createNewFile(fileName);
+        } catch (IOException e) {
+            System.out.println("Error with file path");
+            System.exit(-1);
+        }
+    }
+
+    public static ProductDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new ProductDaoImpl();
+        }
+        return instance;
     }
 
     @Override
@@ -65,7 +75,7 @@ public class ProductDaoImpl implements ProductDao {
 
         String readLine = bufferedReader.readLine();
         while(readLine != null) {
-            Product product = ProductParser.stringToProduct(readLine, productType);
+            Product product = ProductParser.stringToProduct(readLine);
             if (product != null) {
                 products.add(product);
             }
@@ -74,27 +84,5 @@ public class ProductDaoImpl implements ProductDao {
         bufferedReader.close();
 
         return products;
-    }
-
-    @Override
-    public Product getProductById(int productId) throws IOException {
-        List<Product> productList = getAllProducts();
-        for (Product product : productList) {
-            if (product.getId() == productId) {
-                return product;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Product getProductByProductName(String productName) throws IOException {
-        List<Product> productList = getAllProducts();
-        for (Product product : productList) {
-            if (product.getProductName().equals(productName)) {
-                return product;
-            }
-        }
-        return null;
     }
 }

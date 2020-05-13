@@ -1,93 +1,80 @@
 package service;
 
+import api.ProductDao;
 import api.ProductService;
+import dao.ProductDaoImpl;
 import entity.Product;
+import validator.ProductValidator;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
-    List<Product> products = new ArrayList<>();
+    private static ProductServiceImpl instance = null;
+    private ProductDao productDao = ProductDaoImpl.getInstance();
+    private ProductValidator productValidator = ProductValidator.getInstance();
 
-    public ProductServiceImpl() {
+    private ProductServiceImpl() throws IOException {
     }
 
-    public ProductServiceImpl(List<Product> products) {
-        this.products = products;
-    }
-
-
-    @Override
-    public List<Product> getAllProducts() {
-        return products;
-    }
-
-    @Override
-    public int getNumberOfProducts() {
-        int numberOfProducts = 0;
-        for (Product product : products) {
-            numberOfProducts += product.getProductCount();
+    public static ProductServiceImpl getInstance() throws IOException {
+        if (instance == null) {
+            instance = new ProductServiceImpl();
         }
-        return numberOfProducts;
+        return instance;
     }
 
     @Override
-    public Product getProductById(int id) {
-        Product product = null;
-        for (Product product1 : products) {
-            if (product1.getId() == id) {
-                product = product1;
-                break;
-            }
-        }
-        return product;
+    public List<Product> getAllProducts() throws IOException {
+        return productDao.getAllProducts();
     }
 
     @Override
-    public Product getProductByName(String name) {
-        Product product = null;
-        for (Product product1 : products) {
-            if (product1.getProductName().equals(name)) {
-                product = product1;
-                break;
-            }
-        }
-        return product;
+    public int getCountProducts() throws IOException {
+        return getAllProducts().size();
     }
 
     @Override
-    public boolean isProductOnStock(String productName) {
-        boolean result = false;
-        for (Product product : products) {
-            if (product.getProductName().equals(productName)) {
-                result = product.getProductCount() > 0;
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public boolean isNameOnList(String productName) {
-        boolean result = false;
-        for (Product product : products) {
-            if (product.getProductName().equals(productName)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public boolean isIdOnList(int id) {
-        boolean result = false;
+    public Product getProductById(int id) throws IOException {
+        List<Product> products = productDao.getAllProducts();
         for (Product product : products) {
             if (product.getId() == id) {
-                result = true;
-                break;
+                return product;
             }
         }
-        return result;
+        return null;
+    }
+
+    @Override
+    public Product getProductByProductName(String name) throws IOException {
+        List<Product> products = productDao.getAllProducts();
+        for (Product product : products) {
+            if (product.getProductName().equals(name)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isProductOnWarehouse(String productName) throws IOException {
+        return isProductExist(productName) && getProductByProductName(productName).getProductCount() > 0;
+    }
+
+    @Override
+    public boolean isProductExist(String productName) throws IOException {
+        Product product = getProductByProductName(productName);
+        return product != null;
+    }
+
+    @Override
+    public boolean isProductExist(int id) throws IOException {
+        Product product = getProductById(id);
+        return product != null;
+    }
+
+    @Override
+    public boolean saveProduct(Product product) {
+        return false;
     }
 }

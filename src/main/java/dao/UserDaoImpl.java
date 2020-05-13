@@ -10,11 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
-    String fileName;
+    private static final String fileName = "users.data";
+    private static UserDaoImpl instance = null;
 
-    public UserDaoImpl(String fileName) throws IOException {
-        this.fileName = fileName;
-        FileUtils.createNewFile(fileName);
+    private UserDaoImpl() {
+        try {
+            FileUtils.createNewFile(fileName);
+        } catch (IOException e) {
+            System.out.println("Error with file path");
+            System.exit(-1);
+        }
+    }
+
+    public static UserDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new UserDaoImpl();
+        }
+        return instance;
     }
 
     @Override
@@ -64,35 +76,11 @@ public class UserDaoImpl implements UserDao {
         String readLine = bufferedReader.readLine();
         while(readLine != null) {
             User user = UserParser.stringToUser(readLine);
-            if (user != null) {
-                users.add(user);
-            }
+            users.add(user);
             readLine = bufferedReader.readLine();
         }
         bufferedReader.close();
 
         return users;
-    }
-
-    @Override
-    public User getUserById(int userId) throws IOException {
-        List<User> userList = getAllUsers();
-        for (User user : userList) {
-            if (user.getId() == userId) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public User getUserByLogin(String login) throws IOException {
-        List<User> userList = getAllUsers();
-        for (User user : userList) {
-            if (user.getLogin().equals(login)) {
-                return user;
-            }
-        }
-        return null;
     }
 }

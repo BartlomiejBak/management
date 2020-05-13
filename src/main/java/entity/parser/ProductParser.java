@@ -6,57 +6,56 @@ import entity.Product;
 
 public class ProductParser {
 
-    public static Product stringToProduct(String productStr, String productType) {
-        if (productType.equals("PRODUCT")) {
-            return convertToProduct(productStr);
-        } else if (productType.equals("CLOTH")) {
-            return convertToCloth(productStr);
-        } else if (productType.equals("BOOTS")) {
-            return convertToBoots(productStr);
+    public static Product stringToProduct(String productStr) {
+        String[] productInformation = productStr.split(Product.DELIMITER);
+
+        if (productInformation[0].equals("P")) {
+            return convertToProduct(productInformation);
+        } else if (productInformation[0].equals("C")) {
+            return convertToCloth(productInformation);
+        } else if (productInformation[0].equals("B")) {
+            return convertToBoots(productInformation);
         }
 
         return null;
     }
 
-    private static Boots convertToBoots(String productStr) {
-        String [] productInformations = productStr.split(Product.DELIMITER);
+    private static Boots convertToBoots(String[] productInformation) {
 
-        int id = Integer.parseInt(productInformations[0]);
-        String productName = productInformations[1];
-        double price = Double.parseDouble(productInformations[2]);
-        double weight = Double.parseDouble(productInformations[3]);
-        String color = productInformations[4];
-        int productCount = Integer.parseInt(productInformations[5]);
-        int size = Integer.parseInt(productInformations[6]);
-        boolean isNaturalSkin = Boolean.parseBoolean(productInformations[7]);
+        int id = Integer.parseInt(productInformation[1]);
+        String productName = productInformation[2];
+        double price = Double.parseDouble(productInformation[3]);
+        double weight = Double.parseDouble(productInformation[4]);
+        String color = productInformation[5];
+        int productCount = Integer.parseInt(productInformation[6]);
+        int size = Integer.parseInt(productInformation[7]);
+        boolean isNaturalSkin = Boolean.parseBoolean(productInformation[8]);
 
         return new Boots(id, productName, price, weight, color, productCount, size, isNaturalSkin);
     }
 
-    private static Cloth convertToCloth(String productStr) {
-        String [] productInformations = productStr.split(Product.DELIMITER);
+    private static Cloth convertToCloth(String[] productInformation) {
 
-        int id = Integer.parseInt(productInformations[0]);
-        String productName = productInformations[1];
-        double price = Double.parseDouble(productInformations[2]);
-        double weight = Double.parseDouble(productInformations[3]);
-        String color = productInformations[4];
-        int productCount = Integer.parseInt(productInformations[5]);
-        String size = productInformations[6];
-        String material = productInformations[7];
+        int id = Integer.parseInt(productInformation[1]);
+        String productName = productInformation[2];
+        double price = Double.parseDouble(productInformation[3]);
+        double weight = Double.parseDouble(productInformation[4]);
+        String color = productInformation[5];
+        int productCount = Integer.parseInt(productInformation[6]);
+        String size = productInformation[7];
+        String material = productInformation[8];
 
         return new Cloth(id, productName, price, weight, color, productCount, size, material);
     }
 
-    private static Product convertToProduct(String productStr) {
-        String [] productInformations = productStr.split(Product.DELIMITER);
+    private static Product convertToProduct(String[] productInformation) {
 
-        int id = Integer.parseInt(productInformations[0]);
-        String productName = productInformations[1];
-        double price = Double.parseDouble(productInformations[2]);
-        double weight = Double.parseDouble(productInformations[3]);
-        String color = productInformations[4];
-        int productCount = Integer.parseInt(productInformations[5]);
+        int id = Integer.parseInt(productInformation[1]);
+        String productName = productInformation[2];
+        double price = Double.parseDouble(productInformation[3]);
+        double weight = Double.parseDouble(productInformation[4]);
+        String color = productInformation[5];
+        int productCount = Integer.parseInt(productInformation[6]);
 
         return new Product(id, productName, price, weight, color, productCount);
     }

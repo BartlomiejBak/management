@@ -2,7 +2,7 @@ package entity;
 
 public class Product {
     public static final String DELIMITER = "#";
-
+    public static String productType = "P";
     private final int id;
     private final String productName;
     private double price;
@@ -55,7 +55,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return id + DELIMITER
+        return productType + DELIMITER
+                +id + DELIMITER
                 + productName + DELIMITER
                 + price + DELIMITER
                 + weight + DELIMITER

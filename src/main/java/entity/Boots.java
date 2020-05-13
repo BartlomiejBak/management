@@ -1,6 +1,7 @@
 package entity;
 
 public class Boots extends Product {
+    public static String productType = "B";
     private double size;
     private boolean isNaturalSkin;
 
