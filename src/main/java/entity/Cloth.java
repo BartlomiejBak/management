@@ -1,7 +1,7 @@
 package entity;
 
 public class Cloth extends Product {
-    public static String productType = "C";
+    public static final String PRODUCT_TYPE = "C";
     private final String size;
     private final String material;
     
@@ -21,7 +21,8 @@ public class Cloth extends Product {
 
     @Override
     public String toString() {
-        return super.toString() + DELIMITER
+        return PRODUCT_TYPE + DELIMITER
+                + getBasicProductString() + DELIMITER
                 + size + DELIMITER
                 + material;
     }

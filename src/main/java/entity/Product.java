@@ -2,7 +2,7 @@ package entity;
 
 public class Product {
     public static final String DELIMITER = "#";
-    public static String productType = "P";
+    public static final String PRODUCT_TYPE = "P";
     private final int id;
     private final String productName;
     private double price;
@@ -53,14 +53,17 @@ public class Product {
         this.productCount = productCount;
     }
 
-    @Override
-    public String toString() {
-        return productType + DELIMITER
-                +id + DELIMITER
+    public String getBasicProductString() {
+        return id + DELIMITER
                 + productName + DELIMITER
                 + price + DELIMITER
                 + weight + DELIMITER
                 + color + DELIMITER
                 + productCount;
+    }
+    @Override
+    public String toString() {
+        return PRODUCT_TYPE + DELIMITER
+                + getBasicProductString();
     }
 }

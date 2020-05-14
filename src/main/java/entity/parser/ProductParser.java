@@ -9,12 +9,13 @@ public class ProductParser {
     public static Product stringToProduct(String productStr) {
         String[] productInformation = productStr.split(Product.DELIMITER);
 
-        if (productInformation[0].equals("P")) {
-            return convertToProduct(productInformation);
-        } else if (productInformation[0].equals("C")) {
-            return convertToCloth(productInformation);
-        } else if (productInformation[0].equals("B")) {
-            return convertToBoots(productInformation);
+        switch (productInformation[0]) {
+            case "P":
+                return convertToProduct(productInformation);
+            case "C":
+                return convertToCloth(productInformation);
+            case "B":
+                return convertToBoots(productInformation);
         }
 
         return null;

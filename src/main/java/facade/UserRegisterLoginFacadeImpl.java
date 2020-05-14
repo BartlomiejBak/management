@@ -11,13 +11,13 @@ import service.UserServiceImpl;
 import java.io.IOException;
 
 public class UserRegisterLoginFacadeImpl implements UserRegisterLoginFacade {
-    private UserService userService = UserServiceImpl.getInstance();
+    private final UserService userService = UserServiceImpl.getInstance();
     private static UserRegisterLoginFacadeImpl instance = null;
 
-    private UserRegisterLoginFacadeImpl() throws IOException {
+    private UserRegisterLoginFacadeImpl() {
     }
 
-    public static UserRegisterLoginFacadeImpl getInstance() throws IOException {
+    public static UserRegisterLoginFacadeImpl getInstance() {
         if (instance == null) {
             instance = new UserRegisterLoginFacadeImpl();
         }

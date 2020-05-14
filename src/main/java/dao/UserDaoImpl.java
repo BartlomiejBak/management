@@ -31,9 +31,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUser(User user) throws IOException {
-        List<User> productList = getAllUsers();
-        productList.add(user);
-        saveUsers(productList);
+        List<User> users = getAllUsers();
+        users.add(user);
+        saveUsers(users);
     }
 
     @Override

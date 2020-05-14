@@ -11,13 +11,13 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
     private static ProductServiceImpl instance = null;
-    private ProductDao productDao = ProductDaoImpl.getInstance();
-    private ProductValidator productValidator = ProductValidator.getInstance();
+    private final ProductDao productDao = ProductDaoImpl.getInstance();
+    private final ProductValidator productValidator = ProductValidator.getInstance();
 
-    private ProductServiceImpl() throws IOException {
+    private ProductServiceImpl() {
     }
 
-    public static ProductServiceImpl getInstance() throws IOException {
+    public static ProductServiceImpl getInstance() {
         if (instance == null) {
             instance = new ProductServiceImpl();
         }
@@ -75,6 +75,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean saveProduct(Product product) {
+        try {
+            if (productValidator.isValid(product)) {
+                productDao.saveProduct(product);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 }

@@ -1,3 +1,6 @@
+import entity.Boots;
+import entity.Cloth;
+import entity.Product;
 import entity.User;
 import facade.UserRegisterLoginFacadeImpl;
 import service.ProductServiceImpl;
@@ -8,13 +11,10 @@ import java.util.Scanner;
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
     static UserRegisterLoginFacadeImpl userRegisterLoginFacade;
-
+    static ProductServiceImpl productService;
     static {
-        try {
-            userRegisterLoginFacade = UserRegisterLoginFacadeImpl.getInstance();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        productService = ProductServiceImpl.getInstance();
+        userRegisterLoginFacade = UserRegisterLoginFacadeImpl.getInstance();
     }
 
     public static void main(String[] args) throws IOException {
@@ -22,9 +22,9 @@ public class Main {
 
 	    while (control != 0) {
             System.out.println("MANAGEMENT MENU");
-            System.out.println("1 - Zaloguj się");
-            System.out.println("2 - Zarejestruj się");
-            System.out.println("0 - Wyjdź");
+            System.out.println("1 - Log in");
+            System.out.println("2 - Register");
+            System.out.println("0 - Exit");
             control = Integer.parseInt(scanner.nextLine());
 
             switch (control) {
@@ -41,27 +41,107 @@ public class Main {
     }
 
     public static void login() throws IOException {
-        int control = -1;
-        while (control != 0) {
-            System.out.println("MANAGEMENT MENU");
-            System.out.println("1 - Dodaj nowy product");
-            System.out.println("0 - Wyloguj się");
-            control = Integer.parseInt(scanner.nextLine());
-            if (control == 1) productTypeMenu();
+        System.out.println("Please write your login: ");
+        String login = scanner.nextLine();
+        System.out.println("Please enter password: ");
+        String password = scanner.nextLine();
+
+        if (userRegisterLoginFacade.loginUser(login, password)) {
+            System.out.println("hello " + login);
+
+            int control = -1;
+            while (control != 0) {
+                System.out.println("MANAGEMENT MENU");
+                System.out.println("1 - Add new product");
+                System.out.println("0 - Logout");
+                control = Integer.parseInt(scanner.nextLine());
+                if (control == 1) productTypeMenu();
+            }
+        } else {
+            System.out.println("wrong login or password");
         }
     }
 
-    public static void productTypeMenu() throws IOException {
-        ProductServiceImpl productService = ProductServiceImpl.getInstance();
+    public static void productTypeMenu() {
 
-        System.out.println("1 - Dodaj buty");
-        System.out.println("2 - Dodaj ubrania");
-        System.out.println("3 - Inne");
+        System.out.println("1 - Add boots");
+        System.out.println("2 - Add cloth");
+        System.out.println("3 - Other");
         int control = Integer.parseInt(scanner.nextLine());
         switch (control) {
             case 1:
+                addShoe();
+                break;
+            case 2:
+                addCloth();
+                break;
+            case 3:
+                addProduct();
+                break;
+            default:
+                break;
 
         }
+    }
+
+
+    private static void addProduct() {
+        System.out.println("Write id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("Write product name: ");
+        String name = scanner.nextLine();
+        System.out.println("Write product price: ");
+        double price = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write product weight: ");
+        double weight = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write product color: ");
+        String color = scanner.nextLine();
+        System.out.println("Write product count: ");
+        int count = Integer.parseInt(scanner.nextLine());
+
+        productService.saveProduct(new Product(id, name, price, weight, color, count));
+    }
+
+    private static void addCloth() {
+        System.out.println("Write id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("Write product name: ");
+        String name = scanner.nextLine();
+        System.out.println("Write product price: ");
+        double price = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write product weight: ");
+        double weight = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write product color: ");
+        String color = scanner.nextLine();
+        System.out.println("Write product count: ");
+        int count = Integer.parseInt(scanner.nextLine());
+        System.out.println("Write product size: ");
+        String size = scanner.nextLine();
+        System.out.println("Write material: ");
+        String material = scanner.nextLine();
+
+        productService.saveProduct(new Cloth(id, name, price, weight, color, count, size, material));
+    }
+
+    public static void addShoe() {
+        System.out.println("Write id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("Write product name: ");
+        String name = scanner.nextLine();
+        System.out.println("Write product price: ");
+        double price = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write product weight: ");
+        double weight = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write product color: ");
+        String color = scanner.nextLine();
+        System.out.println("Write product count: ");
+        int count = Integer.parseInt(scanner.nextLine());
+        System.out.println("Write product size: ");
+        double size = Double.parseDouble(scanner.nextLine());
+        System.out.println("Write if it is natural skin: ");
+        boolean isLeather = Boolean.getBoolean(scanner.nextLine());
+
+        productService.saveProduct(new Boots(id, name, price, weight, color, count, size, isLeather));
     }
 
     public static void register() {
@@ -77,6 +157,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-
 }

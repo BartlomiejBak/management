@@ -1,19 +1,12 @@
 package validator;
 
-import dao.UserDaoImpl;
 import entity.User;
-import exception.UserLoginAlreadyExistException;
 import exception.UserShortLengthLoginException;
 import exception.UserShortLengthPasswordException;
 
-import java.io.IOException;
-
 public class UserValidator {
-    private final int MIN_LENGTH_PASSWORD = 6;
-    private final int MIN_LENGTH_LOGIN = 4;
 
     private static UserValidator instance = null;
-    private UserDaoImpl userDaoImpl = UserDaoImpl.getInstance();
 
     private UserValidator() {
     }
@@ -36,10 +29,12 @@ public class UserValidator {
     }
 
     private boolean isPasswordLongEnough(String password) {
+        int MIN_LENGTH_PASSWORD = 6;
         return password.length() >= MIN_LENGTH_PASSWORD;
     }
 
     private boolean isLoginLongEnough(String login) {
+        int MIN_LENGTH_LOGIN = 4;
         return login.length() >= MIN_LENGTH_LOGIN;
     }
 }
