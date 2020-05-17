@@ -2,6 +2,12 @@ import entity.Boots;
 import entity.Cloth;
 import entity.Product;
 import entity.User;
+import entity.enums.Color;
+import entity.enums.Material;
+import entity.enums.SkinType;
+import entity.parser.ColorParser;
+import entity.parser.MaterialParser;
+import entity.parser.SkinParser;
 import facade.UserRegisterLoginFacadeImpl;
 import service.ProductServiceImpl;
 
@@ -94,8 +100,8 @@ public class Main {
         double price = Double.parseDouble(scanner.nextLine());
         System.out.println("Write product weight: ");
         double weight = Double.parseDouble(scanner.nextLine());
-        System.out.println("Write product color: ");
-        String color = scanner.nextLine();
+        System.out.println("Write product color (RED, BLUE, GREEN, WHITE, BLACK, YELLOW): ");
+        Color color = ColorParser.parseColor(scanner.nextLine());
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
 
@@ -111,14 +117,14 @@ public class Main {
         double price = Double.parseDouble(scanner.nextLine());
         System.out.println("Write product weight: ");
         double weight = Double.parseDouble(scanner.nextLine());
-        System.out.println("Write product color: ");
-        String color = scanner.nextLine();
+        System.out.println("Write product color (RED, BLUE, GREEN, WHITE, BLACK, YELLOW): ");
+        Color color = ColorParser.parseColor(scanner.nextLine());
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
         System.out.println("Write product size: ");
         String size = scanner.nextLine();
-        System.out.println("Write material: ");
-        String material = scanner.nextLine();
+        System.out.println("What kind of material is it (LEATHER, FUR, COTTON, WOOL, POLYESTERS: ");
+        Material material = MaterialParser.parseMaterial(scanner.nextLine());
 
         productService.saveProduct(new Cloth(id, name, price, weight, color, count, size, material));
     }
@@ -132,16 +138,16 @@ public class Main {
         double price = Double.parseDouble(scanner.nextLine());
         System.out.println("Write product weight: ");
         double weight = Double.parseDouble(scanner.nextLine());
-        System.out.println("Write product color: ");
-        String color = scanner.nextLine();
+        System.out.println("Write product color (RED, BLUE, GREEN, WHITE, BLACK, YELLOW): ");
+        Color color = ColorParser.parseColor(scanner.nextLine());
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
         System.out.println("Write product size: ");
         double size = Double.parseDouble(scanner.nextLine());
-        System.out.println("Write if it is natural skin: ");
-        boolean isLeather = Boolean.getBoolean(scanner.nextLine());
+        System.out.println("What kind of skin is it (NATURAL/ARTIFICIAL): ");
+        SkinType skinType = SkinParser.parseSkinType(scanner.nextLine());
 
-        productService.saveProduct(new Boots(id, name, price, weight, color, count, size, isLeather));
+        productService.saveProduct(new Boots(id, name, price, weight, color, count, size, skinType));
     }
 
     public static void register() {

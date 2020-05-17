@@ -1,7 +1,9 @@
 package entity;
 
+
+import entity.enums.ProductSeparators;
+
 public class User {
-    public static final String DELIMITER = "#";
 
     private final int id;
     private final String login;
@@ -27,8 +29,8 @@ public class User {
 
     @Override
     public String toString() {
-        return id + DELIMITER +
-                login + DELIMITER +
-                password + DELIMITER;
+        return id + ProductSeparators.PRODUCT_SEPARATOR.toString() +
+                login + ProductSeparators.PRODUCT_SEPARATOR.toString() +
+                password + ProductSeparators.PRODUCT_SEPARATOR.toString();
     }
 }
