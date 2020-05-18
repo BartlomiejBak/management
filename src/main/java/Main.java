@@ -1,3 +1,4 @@
+import dao.UserDaoSQLImpl;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
@@ -23,6 +24,8 @@ public class Main {
         userRegisterLoginFacade = UserRegisterLoginFacadeImpl.getInstance();
     }
 
+    //todo ProductFacade implementation
+
     public static void main(String[] args) throws IOException {
 	    int control = -1;
 
@@ -30,6 +33,7 @@ public class Main {
             System.out.println("MANAGEMENT MENU");
             System.out.println("1 - Log in");
             System.out.println("2 - Register");
+            System.out.println("3 - show users");
             System.out.println("0 - Exit");
             control = Integer.parseInt(scanner.nextLine());
 
@@ -39,6 +43,9 @@ public class Main {
                     break;
                 case 2:
                     register();
+                    break;
+                case 3:
+                    userRegisterLoginFacade.showAllUsers();
                     break;
                 default:
                     break;

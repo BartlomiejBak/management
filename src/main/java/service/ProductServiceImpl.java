@@ -2,7 +2,7 @@ package service;
 
 import api.ProductDao;
 import api.ProductService;
-import dao.ProductDaoImpl;
+import dao.ProductDaoFileImpl;
 import entity.Product;
 import validator.ProductValidator;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
     private static ProductServiceImpl instance = null;
-    private final ProductDao productDao = ProductDaoImpl.getInstance();
+    private final ProductDao productDao = ProductDaoFileImpl.getInstance();
     private final ProductValidator productValidator = ProductValidator.getInstance();
 
     private ProductServiceImpl() {

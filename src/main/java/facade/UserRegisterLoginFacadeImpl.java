@@ -33,4 +33,10 @@ public class UserRegisterLoginFacadeImpl implements UserRegisterLoginFacade {
     public boolean loginUser(String login, String password) throws IOException {
         return userService.isCorrectLoginAndPassword(login,password);
     }
+
+    @Override
+    public boolean showAllUsers() throws IOException {
+        System.out.println(userService.getAllUsers());
+        return false;
+    }
 }

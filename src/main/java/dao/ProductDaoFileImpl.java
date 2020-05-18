@@ -9,11 +9,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoImpl implements ProductDao {
+public class ProductDaoFileImpl implements ProductDao {
     private static final String fileName = "products.data";
-    private static ProductDaoImpl instance = null;
+    private static ProductDaoFileImpl instance = null;
 
-    private ProductDaoImpl() {
+    private ProductDaoFileImpl() {
         try {
             FileUtils.createNewFile(fileName);
         } catch (IOException e) {
@@ -22,9 +22,9 @@ public class ProductDaoImpl implements ProductDao {
         }
     }
 
-    public static ProductDaoImpl getInstance() {
+    public static ProductDaoFileImpl getInstance() {
         if (instance == null) {
-            instance = new ProductDaoImpl();
+            instance = new ProductDaoFileImpl();
         }
         return instance;
     }

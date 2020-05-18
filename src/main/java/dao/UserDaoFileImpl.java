@@ -6,14 +6,18 @@ import entity.parser.UserParser;
 import utils.FileUtils;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
-    private static final String fileName = "users.data";
-    private static UserDaoImpl instance = null;
+public class UserDaoFileImpl implements UserDao {
 
-    private UserDaoImpl() {
+
+    private static final String fileName = "users.data";
+    private static UserDaoFileImpl instance = null;
+
+    private UserDaoFileImpl() {
         try {
             FileUtils.createNewFile(fileName);
         } catch (IOException e) {
@@ -22,9 +26,10 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    public static UserDaoImpl getInstance() {
+
+    public static UserDaoFileImpl getInstance() {
         if (instance == null) {
-            instance = new UserDaoImpl();
+            instance = new UserDaoFileImpl();
         }
         return instance;
     }
@@ -82,5 +87,10 @@ public class UserDaoImpl implements UserDao {
         bufferedReader.close();
 
         return users;
+    }
+
+    @Override
+    public void updateUser(User user) {
+
     }
 }

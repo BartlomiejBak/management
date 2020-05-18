@@ -10,4 +10,5 @@ import java.io.IOException;
 public interface UserRegisterLoginFacade {
     boolean registerUser(User user) throws UserLoginAlreadyExistException, UserShortLengthPasswordException, UserShortLengthLoginException, IOException;
     boolean loginUser(String login, String password) throws IOException;
+    boolean showAllUsers() throws IOException;
 }
