@@ -30,7 +30,7 @@ public class ProductDaoFileImpl implements ProductDao {
     }
 
     @Override
-    public void saveProduct(Product product) throws IOException {
+    public void saveProduct(Product product, String productType) throws IOException {
         List<Product> productList = getAllProducts();
         productList.add(product);
         saveProducts(productList);
@@ -85,4 +85,5 @@ public class ProductDaoFileImpl implements ProductDao {
 
         return products;
     }
+
 }

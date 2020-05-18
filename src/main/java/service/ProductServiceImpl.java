@@ -74,15 +74,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean saveProduct(Product product) {
+    public boolean saveProduct(Product product, String productType) {
         try {
             if (productValidator.isValid(product)) {
-                productDao.saveProduct(product);
+                productDao.saveProduct(product, productType);
                 return true;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return false;
+    }
+
+    @Override
+    public boolean deleteProduct(String productName) {
+        try {
+            productDao.removeProductByName(productName);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 }

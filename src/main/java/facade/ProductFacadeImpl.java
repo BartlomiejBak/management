@@ -19,8 +19,8 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public boolean addProduct(Product product) {
-        return productService.saveProduct(product);
+    public boolean addProduct(Product product, String productType) {
+        return productService.saveProduct(product, productType);
     }
 
     @Override
@@ -31,7 +31,6 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Override
     public boolean deleteProduct(String productName) {
-        //todo
         productService.deleteProduct(productName);
         return false;
     }

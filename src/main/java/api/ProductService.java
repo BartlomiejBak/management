@@ -16,5 +16,7 @@ public interface ProductService {
     boolean isProductExist(String productName) throws IOException;
     boolean isProductExist(int id) throws IOException;
 
-    boolean saveProduct(Product product);
+    boolean saveProduct(Product product, String productType);
+
+    boolean deleteProduct(String productName);
 }

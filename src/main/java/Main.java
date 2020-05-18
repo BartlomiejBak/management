@@ -93,7 +93,6 @@ public class Main {
                 break;
             default:
                 break;
-
         }
     }
 
@@ -112,7 +111,7 @@ public class Main {
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
 
-        productService.saveProduct(new Product(id, name, price, weight, color, count));
+        productService.saveProduct(new Product(id, name, price, weight, color, count), "P");
     }
 
     private static void addCloth() {
@@ -133,7 +132,7 @@ public class Main {
         System.out.println("What kind of material is it (LEATHER, FUR, COTTON, WOOL, POLYESTERS: ");
         Material material = MaterialParser.parseMaterial(scanner.nextLine());
 
-        productService.saveProduct(new Cloth(id, name, price, weight, color, count, size, material));
+        productService.saveProduct(new Cloth(id, name, price, weight, color, count, size, material), "C");
     }
 
     public static void addShoe() {
@@ -154,7 +153,7 @@ public class Main {
         System.out.println("What kind of skin is it (NATURAL/ARTIFICIAL): ");
         SkinType skinType = SkinParser.parseSkinType(scanner.nextLine());
 
-        productService.saveProduct(new Boots(id, name, price, weight, color, count, size, skinType));
+        productService.saveProduct(new Boots(id, name, price, weight, color, count, size, skinType), "B");
     }
 
     public static void register() {
