@@ -11,6 +11,7 @@ public class Product {
     private double weight;
     private Color color;
     private int productCount;
+    private String productType = "P";
 
     public Product(int id, String productName,
                    double price, double weight,
@@ -21,6 +22,10 @@ public class Product {
         this.weight = weight;
         this.color = color;
         this.productCount = productCount;
+    }
+
+    public String getProductType() {
+        return productType;
     }
 
     public int getId() {
@@ -35,6 +40,10 @@ public class Product {
         return price;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public double getWeight() {
         return weight;
     }
@@ -45,10 +54,6 @@ public class Product {
 
     public int getProductCount() {
         return productCount;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public void setProductCount(int productCount) {

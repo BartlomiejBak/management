@@ -1,4 +1,3 @@
-import dao.UserDaoSQLImpl;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
@@ -9,22 +8,17 @@ import entity.enums.SkinType;
 import entity.parser.ColorParser;
 import entity.parser.MaterialParser;
 import entity.parser.SkinParser;
+import facade.ProductFacadeImpl;
 import facade.UserRegisterLoginFacadeImpl;
-import service.ProductServiceImpl;
+
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
-    static UserRegisterLoginFacadeImpl userRegisterLoginFacade;
-    static ProductServiceImpl productService;
-    static {
-        productService = ProductServiceImpl.getInstance();
-        userRegisterLoginFacade = UserRegisterLoginFacadeImpl.getInstance();
-    }
-
-    //todo ProductFacade implementation
+    static UserRegisterLoginFacadeImpl userRegisterLoginFacade = UserRegisterLoginFacadeImpl.getInstance();
+    static ProductFacadeImpl productFacade = ProductFacadeImpl.getInstance();
 
     public static void main(String[] args) throws IOException {
 	    int control = -1;
@@ -111,7 +105,7 @@ public class Main {
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
 
-        productService.saveProduct(new Product(id, name, price, weight, color, count), "P");
+        productFacade.addProduct(new Product(id, name, price, weight, color, count), "P");
     }
 
     private static void addCloth() {
@@ -132,7 +126,7 @@ public class Main {
         System.out.println("What kind of material is it (LEATHER, FUR, COTTON, WOOL, POLYESTERS: ");
         Material material = MaterialParser.parseMaterial(scanner.nextLine());
 
-        productService.saveProduct(new Cloth(id, name, price, weight, color, count, size, material), "C");
+        productFacade.addProduct(new Cloth(id, name, price, weight, color, count, size, material), "C");
     }
 
     public static void addShoe() {
@@ -153,7 +147,7 @@ public class Main {
         System.out.println("What kind of skin is it (NATURAL/ARTIFICIAL): ");
         SkinType skinType = SkinParser.parseSkinType(scanner.nextLine());
 
-        productService.saveProduct(new Boots(id, name, price, weight, color, count, size, skinType), "B");
+        productFacade.addProduct(new Boots(id, name, price, weight, color, count, size, skinType), "B");
     }
 
     public static void register() {

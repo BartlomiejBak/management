@@ -7,11 +7,17 @@ import entity.enums.SkinType;
 public class Boots extends Product {
     private double size;
     private SkinType skinType;
+    private String productType = "B";
 
     public Boots(int id, String productName, double price, double weight, Color color, int productCount, double size, SkinType skinType) {
         super(id, productName, price, weight, color, productCount);
         this.size = size;
         this.skinType = skinType;
+    }
+
+    @Override
+    public String getProductType() {
+        return productType;
     }
 
     public double getSize() {

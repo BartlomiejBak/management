@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoSQLImpl implements UserDao {
+    private static UserDaoSQLImpl instance;
     private final String databaseName = "management";
     private final String tableName = "users";
     private final String user = "admin";
     private final String password = "admin";
     private Connection connection;
-    private static UserDaoSQLImpl instance;
 
     private UserDaoSQLImpl() {
         init();
