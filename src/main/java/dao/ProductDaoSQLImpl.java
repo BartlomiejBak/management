@@ -51,7 +51,7 @@ public class ProductDaoSQLImpl implements ProductDao {
         PreparedStatement statement;
         try {
             String query = "insert into " + tableName + " (ID, productType, productName, price," +
-                    "weight, color, quantity, shoeSize, leatherType, clothSize, material) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "weight, color, quantity, shoeSize, skinType, clothSize, material) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(query);
 
             statement.setInt(1, product.getId());
@@ -72,15 +72,17 @@ public class ProductDaoSQLImpl implements ProductDao {
                     break;
                 case "C":
                     Cloth cloth = (Cloth) product;
-                    statement.setDouble(8, Double.NaN);
+                    statement.setNull(8, java.sql.Types.NULL);
                     statement.setString(9, null);
                     statement.setString(10, cloth.getSize());
-                    statement.setString(11,cloth.getMaterial().toString());
+                    statement.setString(11, cloth.getMaterial().toString());
+                    break;
                 default:
-                    statement.setDouble(8, Double.NaN);
+                    statement.setNull(8, java.sql.Types.NULL);
                     statement.setString(9, null);
                     statement.setString(10, null);
                     statement.setString(11,null);
+                    break;
             }
             statement.execute();
             statement.close();
@@ -103,7 +105,7 @@ public class ProductDaoSQLImpl implements ProductDao {
     }
 
     @Override
-    public void removeProductById(int productId) throws IOException {
+    public void removeProductById(int productId) {
         PreparedStatement statement;
         try {
             String query = "delete from " + tableName + " where ID = " + productId;
@@ -116,10 +118,10 @@ public class ProductDaoSQLImpl implements ProductDao {
     }
 
     @Override
-    public void removeProductByName(String productName) throws IOException {
+    public void removeProductByName(String productName) {
         PreparedStatement statement;
         try {
-            String query = "delete from " + tableName + " where productName = " + productName;
+            String query = "delete from " + tableName + " where productName = \"" + productName + "\"";
             statement = connection.prepareStatement(query);
             statement.execute();
             statement.close();
@@ -129,11 +131,10 @@ public class ProductDaoSQLImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllProducts() throws IOException {
+    public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
-        Statement statement = null;
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             String query = "select * from " + tableName;
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -147,9 +148,16 @@ public class ProductDaoSQLImpl implements ProductDao {
                 Color color = ColorParser.parseColor(resultSet.getString("color"));
                 int productCount = resultSet.getInt("quantity");
                 double shoeSize = resultSet.getDouble("shoeSize");
-                SkinType skinType = SkinParser.parseSkinType(resultSet.getString("leatherType"));
+                SkinType skinType = null;
+                if (resultSet.getString("skinType") != null) {
+                    skinType = SkinParser.parseSkinType(resultSet.getString("skinType"));
+                }
                 String clothSize = resultSet.getString("clothSize");
-                Material material = MaterialParser.parseMaterial(resultSet.getString("material"));
+                Material material = null;
+                if (resultSet.getString("material") != null) {
+                    material = MaterialParser.parseMaterial(resultSet.getString("material"));
+                }
+
                 Product product = null;
 
                 switch (productType) {

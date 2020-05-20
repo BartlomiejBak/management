@@ -6,8 +6,6 @@ import entity.parser.UserParser;
 import utils.FileUtils;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 

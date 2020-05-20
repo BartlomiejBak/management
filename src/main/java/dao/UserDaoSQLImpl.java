@@ -66,7 +66,7 @@ public class UserDaoSQLImpl implements UserDao {
     public void removeUserById(int userId) {
         PreparedStatement statement;
         try {
-            String query = "delete from " + tableName + " where ID = " + userId;
+            String query = "DELETE FROM " + tableName + " where ID = " + userId;
             statement = connection.prepareStatement(query);
             statement.execute();
             statement.close();
@@ -114,6 +114,7 @@ public class UserDaoSQLImpl implements UserDao {
     }
 
     @Override
+    //todo - implementation
     public void updateUser(User user) {
         PreparedStatement statement;
         try {

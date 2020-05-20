@@ -28,6 +28,7 @@ public class Main {
             System.out.println("1 - Log in");
             System.out.println("2 - Register");
             System.out.println("3 - show users");
+            System.out.println("4 - show products");
             System.out.println("0 - Exit");
             control = Integer.parseInt(scanner.nextLine());
 
@@ -41,6 +42,8 @@ public class Main {
                 case 3:
                     userRegisterLoginFacade.showAllUsers();
                     break;
+                case 4:
+                    productFacade.showAllProducts();
                 default:
                     break;
             }
@@ -60,13 +63,22 @@ public class Main {
             while (control != 0) {
                 System.out.println("MANAGEMENT MENU");
                 System.out.println("1 - Add new product");
+                System.out.println("2 - Delete product");
                 System.out.println("0 - Logout");
                 control = Integer.parseInt(scanner.nextLine());
                 if (control == 1) productTypeMenu();
+                if (control == 2) productDeleteMenu();
+
             }
         } else {
             System.out.println("wrong login or password");
         }
+    }
+
+    public static void productDeleteMenu() {
+        System.out.println("Type the name of product to be deleted:");
+        String productName = scanner.nextLine();
+        productFacade.deleteProduct(productName);
     }
 
     public static void productTypeMenu() {
