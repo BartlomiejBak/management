@@ -11,7 +11,6 @@ import entity.parser.ColorParser;
 import entity.parser.MaterialParser;
 import entity.parser.SkinParser;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,7 @@ public class ProductDaoSQLImpl implements ProductDao {
             switch (productType) {
                 case "B":
                     Boots boots = (Boots) product;
-                    statement.setDouble(8, boots.getSize());
+                    statement.setDouble(8, boots.getShoeSize());
                     statement.setString(9, boots.getSkinType().toString());
                     statement.setString(10, null);
                     statement.setString(11,null);

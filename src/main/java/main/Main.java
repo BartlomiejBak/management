@@ -1,3 +1,6 @@
+package main;
+
+import dao.ProductDaoHibernateImpl;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
@@ -45,6 +48,7 @@ public class Main {
                 case 4:
                     productFacade.showAllProducts();
                 default:
+                    ProductDaoHibernateImpl.closeTransaction();
                     break;
             }
         }
@@ -102,10 +106,7 @@ public class Main {
         }
     }
 
-
     private static void addProduct() {
-        System.out.println("Write id: ");
-        int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Write product name: ");
         String name = scanner.nextLine();
         System.out.println("Write product price: ");
@@ -117,12 +118,10 @@ public class Main {
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
 
-        productFacade.addProduct(new Product(id, name, price, weight, color, count), "P");
+        productFacade.addProduct(new Product(name, price, weight, color, count), "P");
     }
 
     private static void addCloth() {
-        System.out.println("Write id: ");
-        int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Write product name: ");
         String name = scanner.nextLine();
         System.out.println("Write product price: ");
@@ -133,17 +132,15 @@ public class Main {
         Color color = ColorParser.parseColor(scanner.nextLine());
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
-        System.out.println("Write product size: ");
+        System.out.println("Write product size (String): ");
         String size = scanner.nextLine();
         System.out.println("What kind of material is it (LEATHER, FUR, COTTON, WOOL, POLYESTERS: ");
         Material material = MaterialParser.parseMaterial(scanner.nextLine());
 
-        productFacade.addProduct(new Cloth(id, name, price, weight, color, count, size, material), "C");
+        productFacade.addProduct(new Cloth(name, price, weight, color, count, size, material), "C");
     }
 
     public static void addShoe() {
-        System.out.println("Write id: ");
-        int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Write product name: ");
         String name = scanner.nextLine();
         System.out.println("Write product price: ");
@@ -154,12 +151,12 @@ public class Main {
         Color color = ColorParser.parseColor(scanner.nextLine());
         System.out.println("Write product count: ");
         int count = Integer.parseInt(scanner.nextLine());
-        System.out.println("Write product size: ");
+        System.out.println("Write product size (Double): ");
         double size = Double.parseDouble(scanner.nextLine());
         System.out.println("What kind of skin is it (NATURAL/ARTIFICIAL): ");
         SkinType skinType = SkinParser.parseSkinType(scanner.nextLine());
 
-        productFacade.addProduct(new Boots(id, name, price, weight, color, count, size, skinType), "B");
+        productFacade.addProduct(new Boots(name, price, weight, color, count, size, skinType), "B");
     }
 
     public static void register() {
