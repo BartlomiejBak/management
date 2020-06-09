@@ -6,6 +6,7 @@ import entity.Product;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -36,35 +37,37 @@ public class ProductDaoHibernateImpl implements ProductDao {
         entityManager.persist(product);
         entityManager.getTransaction().commit();
         entityManager.refresh(product);
-
     }
 
     @Override
     public void saveProducts(List<Product> products) {
-
-        entityManager.getTransaction().begin();
         for (Product product : products) {
-            entityManager.persist(product);
-            entityManager.getTransaction().commit();
-            entityManager.refresh(product);
+            saveProduct(product,"list");
         }
-        entityManager.close();
-        entityManagerFactory.close();
     }
 
     @Override
     public void removeProductById(int productId) {
-
+        entityManager.getTransaction().begin();
+        Product product = entityManager.find(Product.class, productId);
+        entityManager.remove(product);
+        entityManager.getTransaction().commit();
     }
 
     @Override
-    public void removeProductByName(String productName) {
+    public void removeProductByName(String removedProductName) {
+        entityManager.getTransaction().begin();
+        TypedQuery<Product> query = entityManager.createQuery("SELECT a FROM Product a WHERE a.productName = :name ", Product.class);
+        query.setParameter("name", removedProductName);
 
+        for (Product product : query.getResultList()) {
+            entityManager.remove(product);
+        }
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public List<Product> getAllProducts() {
-
-        return null;
+        return entityManager.createQuery("SELECT a FROM Product a", Product.class).getResultList();
     }
 }

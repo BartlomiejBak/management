@@ -1,6 +1,7 @@
 package main;
 
 import dao.ProductDaoHibernateImpl;
+import dao.UserDaoHibernateImpl;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
@@ -26,6 +27,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 	    int control = -1;
 
+
 	    while (control != 0) {
             System.out.println("MANAGEMENT MENU");
             System.out.println("1 - Log in");
@@ -48,10 +50,12 @@ public class Main {
                 case 4:
                     productFacade.showAllProducts();
                 default:
-                    ProductDaoHibernateImpl.closeTransaction();
                     break;
             }
         }
+
+        ProductDaoHibernateImpl.closeTransaction();
+        UserDaoHibernateImpl.closeTransaction();
     }
 
     public static void login() throws IOException {
